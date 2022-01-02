@@ -1,0 +1,23 @@
+@import "./variables.css";
+
+.status {
+    background-color: var(--darker);
+    border: 1px solid var(--medium);
+    border-radius: 5px;
+    width: 25%;
+    float: right;
+    padding: 20px 20px 20px 20px;
+    text-align: center;
+}
+
+.board {
+    background-color: var(--light);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-gap: 2px;
+}
+
+.status-title {
+    margin: 0 0 15px 0;
+}

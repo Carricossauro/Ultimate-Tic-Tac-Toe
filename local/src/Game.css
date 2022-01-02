@@ -1,0 +1,44 @@
+@import "variables.css";
+
+.game {
+    background-color: var(--darker);
+    border: 1px solid var(--medium);
+    border-radius: 5px;
+    width: 70%;
+    aspect-ratio: 1;
+    float: left;
+}
+
+.game-content {
+    width: 100%;
+    float: left;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.turn {
+    width: 100%;
+    padding: 5px;
+    border-bottom: 1px solid var(--medium);
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-gap: 5%;
+    padding: 2% 5%;
+    aspect-ratio: 1;
+}
+
+.board-element {
+    background-color: var(--darker);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3em;
+    aspect-ratio: 1;
+}
