@@ -5,13 +5,9 @@ import "./Status.css";
 
 export default function Game({
     smallBoard,
-    setSmallBoard,
     bigBoard,
-    setBigBoard,
     playing,
-    setPlaying,
     nextBoard,
-    setNextBoard,
     play,
     gameOver,
     tie,

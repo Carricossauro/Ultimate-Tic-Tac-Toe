@@ -128,13 +128,9 @@ function Index() {
             <div className="content">
                 <Game
                     smallBoard={smallBoard}
-                    setSmallBoard={setSmallBoard}
                     bigBoard={bigBoard}
-                    setBigBoard={setBigBoard}
                     playing={playing}
-                    setPlaying={setPlaying}
                     nextBoard={nextBoard}
-                    setNextBoard={setNextBoard}
                     play={play}
                     gameOver={gameOver}
                     tie={tie}
