@@ -4,10 +4,11 @@
     background-color: var(--darker);
     border: 1px solid var(--medium);
     border-radius: 5px;
-    width: 25%;
-    float: right;
-    padding: 20px 20px 20px 20px;
+    flex: 1;
+    margin-left: 1%;
+    padding: 0 20px 20px 20px;
     text-align: center;
+    float: right;
 }
 
 .board {
@@ -20,4 +21,6 @@
 
 .status-title {
     margin: 0 0 15px 0;
+    padding: 5px;
+    border-bottom: 1px solid var(--medium);
 }

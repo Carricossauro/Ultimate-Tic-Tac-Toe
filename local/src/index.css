@@ -3,6 +3,12 @@
 main {
     margin: 30px auto;
     width: 60%;
+    min-width: 600px;
+}
+
+.content {
+    display: flex;
+    align-items: flex-start;
 }
 
 .nav-bar {

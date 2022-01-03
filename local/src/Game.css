@@ -20,6 +20,7 @@
 .turn {
     width: 100%;
     padding: 5px;
+    margin: 0;
     border-bottom: 1px solid var(--medium);
     margin-bottom: 5px;
     text-align: center;
@@ -39,6 +40,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 3em;
+    font-size: 2vw;
     aspect-ratio: 1;
+    transition-duration: 0.5s;
+}
+
+.position-playable {
+    cursor: pointer;
+}
+
+.position-playable:hover {
+    background-color: var(--light);
+}
+
+.available {
+    border: 1px solid var(--light);
 }
