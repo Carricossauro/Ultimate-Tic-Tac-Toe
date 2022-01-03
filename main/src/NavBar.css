@@ -1,0 +1,44 @@
+@import "./index.css";
+
+.nav-bar {
+    background-color: var(--darker);
+    border: 1px solid var(--medium);
+    border-radius: 5px;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.title {
+    margin: 0 20px 0 0;
+}
+
+.nav-link-grid {
+    display: grid;
+    height: 100%;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.nav-link {
+    text-align: center;
+    padding: 20px 40px;
+    background-color: transparent;
+    text-decoration: none;
+    color: var(--dark-text);
+    cursor: pointer;
+    transition-duration: 0.5s;
+}
+
+.nav-link:hover {
+    background-color: var(--medium);
+    color: var(--light-text);
+}
+
+.left {
+    border-left: 1px solid var(--medium);
+}
+
+.right {
+    border-right: 1px solid var(--medium);
+}

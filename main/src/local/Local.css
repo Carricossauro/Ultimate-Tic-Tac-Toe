@@ -1,0 +1,6 @@
+@import "../index.css";
+
+.content {
+    display: flex;
+    align-items: flex-start;
+}

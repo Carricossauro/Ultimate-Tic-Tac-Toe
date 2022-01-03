@@ -1,0 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto+Mono&display=swap");
+
+:root {
+    --darker: #171010;
+    --dark: #362222;
+    --medium: #2b2b2b;
+    --light: #423f3e;
+    --dark-text: #c1bebd;
+    --light-text: white;
+}
+
+body {
+    background-color: var(--dark);
+    color: var(--dark-text);
+    font-family: "Montserrat", sans-serif;
+}
+
+main {
+    margin: 30px auto;
+    width: 60%;
+    min-width: 600px;
+}
