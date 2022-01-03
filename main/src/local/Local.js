@@ -122,7 +122,7 @@ export default function Local() {
     };
 
     return (
-        <div className="content">
+        <div className="local-content">
             <Game
                 smallBoard={smallBoard}
                 bigBoard={bigBoard}

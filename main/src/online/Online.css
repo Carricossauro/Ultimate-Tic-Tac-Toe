@@ -1,0 +1,15 @@
+@import "../index.css";
+
+.online-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.development {
+    background-color: var(--darker);
+    border: 1px solid var(--medium);
+    border-radius: 5px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}

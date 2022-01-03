@@ -1,6 +1,7 @@
 @import "../index.css";
 
-.content {
+.local-content {
     display: flex;
+    flex-direction: row;
     align-items: flex-start;
 }

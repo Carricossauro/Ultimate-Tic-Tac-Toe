@@ -1,0 +1,52 @@
+@import "../index.css";
+
+.home-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.welcome-section {
+    background-color: var(--darker);
+    padding: 20px;
+    border: 1px solid var(--medium);
+    border-radius: 5px;
+}
+
+.link {
+    color: var(--dark-text);
+}
+
+.link:hover {
+    color: var(--light-text);
+}
+
+.play-section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+    margin-top: 10px;
+}
+
+.play-local-online {
+    background-color: var(--darker);
+    padding: 20px;
+    border: 1px solid var(--medium);
+    border-radius: 5px;
+    text-align: center;
+}
+
+.play-button {
+    color: var(--dark-text);
+    background-color: var(--darker);
+    border: 1px solid var(--medium);
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 10px;
+    transition-duration: 0.5s;
+    width: 100%;
+}
+
+.play-button:hover {
+    background-color: var(--medium);
+    color: var(--dark-text);
+}
