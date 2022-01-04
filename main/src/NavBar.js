@@ -1,5 +1,12 @@
 import React from "react";
 import "./NavBar.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faGithub,
+    faTwitter,
+    faLinkedin,
+    faInstagram,
+} from "@fortawesome/free-brands-svg-icons";
 
 export default function NavBar() {
     return (
@@ -16,6 +23,26 @@ export default function NavBar() {
                     Online
                 </a>
             </nav>
+            <div className="social-media">
+                <a href="https://github.com/Carricossauro" target="_blank">
+                    <FontAwesomeIcon icon={faGithub} className="icon" />
+                </a>
+                <a href="https://twitter.com/charricossauro" target="_blank">
+                    <FontAwesomeIcon icon={faTwitter} className="icon" />
+                </a>
+                <a
+                    href="https://www.linkedin.com/in/tiagocarrico/"
+                    target="_blank"
+                >
+                    <FontAwesomeIcon icon={faLinkedin} className="icon" />
+                </a>
+                <a
+                    href="https://www.instagram.com/carricossauro/"
+                    target="_blank"
+                >
+                    <FontAwesomeIcon icon={faInstagram} className="icon" />
+                </a>
+            </div>
         </div>
     );
 }

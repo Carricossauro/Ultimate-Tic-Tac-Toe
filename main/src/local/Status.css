@@ -7,7 +7,6 @@
     padding: 0 20px 20px 20px;
     text-align: center;
     flex: 1;
-    margin-left: 10px;
 }
 
 .board {
@@ -22,4 +21,28 @@
     margin: 0 0 15px 0;
     padding: 5px;
     border-bottom: 1px solid var(--medium);
+}
+
+.status-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-left: 10px;
+}
+
+.restart-button {
+    margin-top: 10px;
+    color: var(--dark-text);
+    background-color: var(--darker);
+    border: 1px solid var(--medium);
+    font-family: "Montserrat", sans-serif;
+    font-size: 15px;
+    padding: 10px;
+    cursor: pointer;
+    transition-duration: 0.5s;
+}
+
+.restart-button:hover {
+    background-color: var(--medium);
+    color: var(--light-text);
 }

@@ -32,6 +32,7 @@ export default function Local() {
         setPlaying(true);
         setNextBoard(-1);
         setGameOver(false);
+        setTie(false);
     };
 
     // For calculating play and adding it to the game boards
@@ -132,7 +133,11 @@ export default function Local() {
                 gameOver={gameOver}
                 tie={tie}
             />
-            <Status smallBoard={smallBoard} setSmallBoard={setSmallBoard} />
+            <Status
+                smallBoard={smallBoard}
+                setSmallBoard={setSmallBoard}
+                restartGame={restartGame}
+            />
         </div>
     );
 }
