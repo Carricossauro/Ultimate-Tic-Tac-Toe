@@ -5,6 +5,7 @@ import NavBar from "./NavBar";
 import Local from "./local/Local";
 import Online from "./online/Online";
 import Home from "./home/Home";
+import Footer from "./Footer";
 
 import "./index.css";
 
@@ -17,6 +18,7 @@ ReactDOM.render(
                 <Route path="/online" element={<Online />} />
                 <Route path="/" element={<Home />} />
             </Routes>
+            <Footer />
         </Router>
     </main>,
     document.getElementById("root")

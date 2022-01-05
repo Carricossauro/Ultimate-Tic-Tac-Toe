@@ -1,0 +1,7 @@
+@import "./index.css";
+
+.copyright {
+    margin-top: 5px;
+    font-family: sans-serif;
+    font-size: 11px;
+}
