@@ -1,9 +1,6 @@
 import React from "react";
 
 export default function Square({
-    smallBoard,
-    bigBoard,
-    playing,
     nextBoard,
     play,
     gameOver,
@@ -13,27 +10,25 @@ export default function Square({
     elementB,
     indexB,
 }) {
+    const playable = () => {
+        if (
+            !gameOver &&
+            !tie &&
+            (nextBoard === -1 || nextBoard === index) &&
+            element === "" &&
+            elementB === ""
+        )
+            return true;
+
+        return false;
+    };
+
     return (
         <div
             key={indexB}
-            className={`board-element ${
-                !gameOver &&
-                !tie &&
-                (nextBoard === -1 || nextBoard === index) &&
-                element === "" &&
-                elementB === ""
-                    ? "position-playable"
-                    : ""
-            }`}
+            className={`board-element ${playable() ? "position-playable" : ""}`}
             onClick={() => {
-                if (
-                    !gameOver &&
-                    !tie &&
-                    (nextBoard === -1 || nextBoard === index) &&
-                    element === "" &&
-                    elementB === ""
-                )
-                    play(index, indexB);
+                if (playable()) play(index, indexB);
             }}
         >
             {elementB}

@@ -12,8 +12,7 @@ export default function Game(props) {
         return `${playing ? "X" : "O"}'s turn`;
     };
 
-    const { smallBoard, bigBoard, playing, nextBoard, play, gameOver, tie } =
-        props;
+    const { smallBoard, playing, gameOver, tie } = props;
     return (
         <div className="game">
             <div className="game-content">

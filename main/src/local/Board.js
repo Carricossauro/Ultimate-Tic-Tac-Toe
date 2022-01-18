@@ -3,17 +3,7 @@ import React from "react";
 import Square from "./Square";
 
 export default function Board(props) {
-    const {
-        smallBoard,
-        bigBoard,
-        playing,
-        nextBoard,
-        play,
-        gameOver,
-        tie,
-        element,
-        index,
-    } = props;
+    const { bigBoard, nextBoard, gameOver, tie, element, index } = props;
 
     const available = () => {
         if (
