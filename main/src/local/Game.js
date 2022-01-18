@@ -14,21 +14,19 @@ export default function Game(props) {
 
     const { smallBoard, playing, gameOver, tie } = props;
     return (
-        <div className="game">
-            <div className="game-content">
-                <h3 className="turn">{tie ? "It's a tie!" : turn()}</h3>
-                <div className="game-board">
-                    {smallBoard.map(function (element, index) {
-                        return (
-                            <Board
-                                {...props}
-                                key={index}
-                                element={element}
-                                index={index}
-                            />
-                        );
-                    })}
-                </div>
+        <div className="game-content">
+            <h3 className="turn">{tie ? "It's a tie!" : turn()}</h3>
+            <div className="game-board">
+                {smallBoard.map(function (element, index) {
+                    return (
+                        <Board
+                            {...props}
+                            key={index}
+                            element={element}
+                            index={index}
+                        />
+                    );
+                })}
             </div>
         </div>
     );

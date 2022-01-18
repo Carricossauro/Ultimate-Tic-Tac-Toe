@@ -1,16 +1,11 @@
 @import "../index.css";
 
-.game {
+.game-content {
     background-color: var(--darker);
     border: 1px solid var(--medium);
     border-radius: 5px;
     width: 70%;
     aspect-ratio: 1;
-}
-
-.game-content {
-    width: 100%;
-    float: left;
     display: flex;
     flex-direction: column;
     overflow: hidden;
