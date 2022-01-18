@@ -3,75 +3,30 @@ import React from "react";
 import "./Game.css";
 import "./Status.css";
 
-export default function Game({
-    smallBoard,
-    bigBoard,
-    playing,
-    nextBoard,
-    play,
-    gameOver,
-    tie,
-}) {
+import Board from "./Board";
+
+export default function Game(props) {
+    const turn = () => {
+        if (gameOver) return `${gameOver} wins!`;
+
+        return `${playing ? "X" : "O"}'s turn`;
+    };
+
+    const { smallBoard, bigBoard, playing, nextBoard, play, gameOver, tie } =
+        props;
     return (
         <div className="game">
             <div className="game-content">
-                <h3 className="turn">
-                    {tie
-                        ? "It's a tie!"
-                        : `${
-                              gameOver
-                                  ? `${gameOver} wins!`
-                                  : `${playing ? "X" : "O"}'s turn`
-                          }`}
-                </h3>
+                <h3 className="turn">{tie ? "It's a tie!" : turn()}</h3>
                 <div className="game-board">
                     {smallBoard.map(function (element, index) {
                         return (
-                            <div
+                            <Board
+                                {...props}
                                 key={index}
-                                className={`board ${
-                                    !gameOver &&
-                                    !tie &&
-                                    (nextBoard === -1 || nextBoard === index) &&
-                                    element === ""
-                                        ? "available"
-                                        : ""
-                                }`}
-                            >
-                                {bigBoard[index].map(function (
-                                    elementB,
-                                    indexB
-                                ) {
-                                    return (
-                                        <div
-                                            key={indexB}
-                                            className={`board-element ${
-                                                !gameOver &&
-                                                !tie &&
-                                                (nextBoard === -1 ||
-                                                    nextBoard === index) &&
-                                                element === "" &&
-                                                elementB === ""
-                                                    ? "position-playable"
-                                                    : ""
-                                            }`}
-                                            onClick={() => {
-                                                if (
-                                                    !gameOver &&
-                                                    !tie &&
-                                                    (nextBoard === -1 ||
-                                                        nextBoard === index) &&
-                                                    element === "" &&
-                                                    elementB === ""
-                                                )
-                                                    play(index, indexB);
-                                            }}
-                                        >
-                                            {elementB}
-                                        </div>
-                                    );
-                                })}
-                            </div>
+                                element={element}
+                                index={index}
+                            />
                         );
                     })}
                 </div>
