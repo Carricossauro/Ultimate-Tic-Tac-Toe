@@ -15,7 +15,7 @@ ReactDOM.render(
             <NavBar />
             <Routes>
                 <Route path="/local" element={<Local />} />
-                <Route path="/online" element={<Online />} />
+                <Route path="/online/:repo" element={<Online />} />
                 <Route path="/" element={<Home />} />
             </Routes>
             <Footer />
