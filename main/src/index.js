@@ -1,6 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+    BrowserRouter as Router,
+    Route,
+    Routes,
+    Navigate,
+} from "react-router-dom";
 import NavBar from "./NavBar";
 import Local from "./local/Local";
 import Online from "./online/Online";
@@ -15,8 +20,12 @@ ReactDOM.render(
             <NavBar />
             <Routes>
                 <Route path="/local" element={<Local />} />
-                <Route path="/online/:repo" element={<Online />} />
-                <Route path="/" element={<Home />} />
+                <Route path="/online/:gameId" element={<Online />} />
+                <Route
+                    path="/online"
+                    element={<Navigate to="/online/status" />}
+                />
+                <Route path="*" element={<Home />} />
             </Routes>
             <Footer />
         </Router>

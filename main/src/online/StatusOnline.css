@@ -1,0 +1,61 @@
+.online-status {
+    background-color: var(--darker);
+    border: 1px solid var(--medium);
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.game-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-areas: "game-id creation-date game-status continue-button";
+}
+
+.game-id {
+    grid-area: "game-id";
+    text-align: center;
+    padding: 10px;
+    line-height: 25px;
+    border-bottom: 1px solid var(--medium);
+}
+
+.creation-date {
+    grid-area: "creation-date";
+    text-align: center;
+    padding: 10px;
+    line-height: 25px;
+    border-left: 1px solid var(--medium);
+    border-right: 1px solid var(--medium);
+    border-bottom: 1px solid var(--medium);
+}
+
+.game-status {
+    grid-area: "game-status";
+    text-align: center;
+    padding: 10px;
+    line-height: 25px;
+    border-bottom: 1px solid var(--medium);
+}
+
+.continue-button {
+    grid-area: "continue-button";
+    text-align: center;
+    padding: 10px;
+    line-height: 25px;
+}
+
+.button-continue {
+    color: var(--dark-text);
+    background-color: var(--darker);
+    border: 1px solid var(--medium);
+    border-radius: 5px;
+    cursor: pointer;
+    transition-duration: 0.5s;
+    height: 100%;
+    width: 90%;
+}
+
+.button-continue:hover {
+    background-color: var(--medium);
+    color: var(--light-text);
+}
