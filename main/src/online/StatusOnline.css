@@ -59,3 +59,20 @@
     background-color: var(--medium);
     color: var(--light-text);
 }
+
+.new-game-button {
+    color: var(--dark-text);
+    background-color: var(--darker);
+    border: 1px solid var(--medium);
+    border-radius: 5px;
+    cursor: pointer;
+    transition-duration: 0.5s;
+    width: 100%;
+    height: 40px;
+    margin-bottom: 10px;
+}
+
+.new-game-button:hover {
+    background-color: var(--medium);
+    color: var(--light-text);
+}
