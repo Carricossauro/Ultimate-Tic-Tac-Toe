@@ -23,7 +23,6 @@ export default function StatusOnline(props) {
         <div className="online-status">
             <button className="new-game-button">Create New Game</button>
             <div className="game-list">
-                <div className="game-id">Game id</div>
                 <div className="creation-date">Creation Date</div>
                 <div className="game-status">Status</div>
                 <div className="continue-button"></div>

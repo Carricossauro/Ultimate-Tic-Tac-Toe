@@ -7,16 +7,8 @@
 
 .game-list {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-areas: "game-id creation-date game-status continue-button";
-}
-
-.game-id {
-    grid-area: "game-id";
-    text-align: center;
-    padding: 10px;
-    line-height: 25px;
-    border-bottom: 1px solid var(--medium);
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas: "creation-date game-status continue-button";
 }
 
 .creation-date {
@@ -24,7 +16,6 @@
     text-align: center;
     padding: 10px;
     line-height: 25px;
-    border-left: 1px solid var(--medium);
     border-right: 1px solid var(--medium);
     border-bottom: 1px solid var(--medium);
 }

@@ -8,21 +8,19 @@ export default function GameStatus({ game, gameid }) {
         return game["status"] == "Playing";
     };
 
+    const continueGame = () => {
+        window.location.href = `/online/${gameid}`;
+    };
+
     return (
         <>
-            <div className="game-id">{gameid}</div>
             <div className="creation-date">{game["date"]}</div>
             <div className="game-status">
                 {boldStatus() ? <b>{game["status"]}</b> : game["status"]}
             </div>
             <div className="continue-button">
                 {boldStatus() ? (
-                    <button
-                        className="button-continue"
-                        onClick={() =>
-                            (window.location.href = `/online/${gameid}`)
-                        }
-                    >
+                    <button className="button-continue" onClick={continueGame}>
                         Continue Game
                     </button>
                 ) : (
