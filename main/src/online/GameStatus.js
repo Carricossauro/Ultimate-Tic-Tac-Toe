@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React from "react";
 
 import "./StatusOnline.css";
 
 export default function GameStatus({ game, gameid }) {
     const boldStatus = () => {
-        return game["status"] == "Playing";
+        return game["status"] === "Playing";
     };
 
     const continueGame = () => {
