@@ -26,6 +26,33 @@ const db = client.db("UltimateTicTacToe");
 const games = db.collection("games");
 const accounts = db.collection("accounts");
 
+async function gameList(playerID) {
+    const result = games.aggregate([
+        {
+            $match: {
+                $or: [
+                    {
+                        pX: ObjectId(playerID),
+                    },
+                    {
+                        pO: ObjectId(playerID),
+                    },
+                ],
+            },
+        },
+        {
+            $project: {
+                _id: 1,
+                pX: 1,
+                status: 1,
+                winner: 1,
+            },
+        },
+    ]);
+
+    return result;
+}
+
 async function createAccount(name) {
     const result = await accounts.insertOne({
         name: name,
@@ -69,4 +96,12 @@ const io = new Server(3600, {
 
 io.on("connection", (socket) => {
     console.log(socket.id);
+
+    socket.on("create-account", async (name, callback) => {
+        callback(await createAccount(name));
+    });
+
+    socket.on("game-list", async (playerID, callback) => {
+        callback(await gameList(playerID));
+    });
 });
