@@ -1,5 +1,18 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 import { Server } from "socket.io";
+
+const smallBoardEmpty = ["", "", "", "", "", "", "", "", ""];
+const bigBoardEmpty = [
+    ["", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", ""],
+];
 
 const uri =
     "mongodb+srv://teste:teste@ultimatetictactoe.t8160.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
@@ -10,23 +23,43 @@ await client.connect();
 
 const db = client.db("UltimateTicTacToe");
 
-const col = db.collection("games");
+const games = db.collection("games");
+const accounts = db.collection("accounts");
 
-async function createGame() {
-    const result = await col.insertOne({
-        password: Math.random().toString(36).slice(-8),
-        over: false,
-        playing: "X",
+async function createAccount(name) {
+    const result = await accounts.insertOne({
+        name: name,
+        wins: 0,
+        losses: 0,
+        ties: 0,
     });
 
     return result["insertedId"].toHexString();
 }
 
-async function endGame(id) {
-    const result = await col.updateOne({ _id: id }, { $set: { over: true } });
+async function createGame(playerId) {
+    const today = new Date();
+
+    const result = await games.insertOne({
+        pX: ObjectId(playerId),
+        pO: null,
+        status: false,
+        winner: null,
+        bigBoard: bigBoardEmpty,
+        smallBoard: smallBoardEmpty,
+        "creation-date": `${today.getFullYear()}-${
+            today.getMonth() + 1
+        }-${today.getDate()}`,
+    });
+
+    return result["insertedId"].toHexString();
 }
 
-// Socket io only from here and beyond
+/*
+###################################
+Socket.io only from here and beyond
+###################################
+*/
 
 const io = new Server(3600, {
     cors: {
@@ -36,10 +69,4 @@ const io = new Server(3600, {
 
 io.on("connection", (socket) => {
     console.log(socket.id);
-
-    socket.on("create", async (callback) => {
-        const gameId = await createGame();
-        console.log(`Created game with id ${gameId}`);
-        callback(gameId);
-    });
 });
