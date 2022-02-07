@@ -98,5 +98,3 @@ io.on("connection", (socket) => {
     });
 });
 
-createGame("62014cb6321c1e155f0e82a5");
-createGame("62014cb6321c1e155f0e82a5");
