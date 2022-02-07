@@ -1,47 +1,31 @@
 import React, { useEffect, useState } from "react";
+import { io } from "socket.io-client";
 
 import "./StatusOnline.css";
 import GameStatus from "./GameStatus";
 
 export default function StatusOnline(props) {
-    const [games, SetGames] = useState([]);
-    const [expired, SetExpired] = useState(false);
-
-    const gameInfo = (id) => {
+    const [games, setGames] = useState([]);
+    const [playerID, setPlayerID] = useState(() => {
         try {
-            const game = JSON.parse(localStorage.getItem(id)) || [];
-            console.log(game);
-            return game;
+            return localStorage.getItem("id") || null;
         } catch (error) {
-            console.log(error);
-            return [];
+            return null;
         }
-    };
+    });
 
     useEffect(() => {
         try {
-            SetGames(JSON.parse(localStorage.getItem("games")) || []);
-        } catch (error) {
-            SetGames([]);
-        }
-    }, []);
+            const socket = io(process.env.REACT_APP_SERVER_IP);
+            socket.on("connect", () => {
+                console.log(`Connected with id ${socket.id}`);
+            });
 
-    useEffect(() => {
-        if (games.length !== 0 && !expired) {
-            console.log("Inicial: [" + games + "]");
-            const finalList = [];
-            const today = new Date();
-            for (let i = 0; i < games.length; i++) {
-                const info = gameInfo(games[i]);
-                if (info["expiry"] > today.getTime()) finalList.push(games[i]);
-                else localStorage.removeItem(games[i]);
-            }
-            console.log("Final: [" + finalList + "]");
-            localStorage.setItem("games", JSON.stringify(finalList));
-            SetExpired(true);
-            SetGames(finalList);
+            socket.emit("game-list", playerID, setGames);
+        } catch (error) {
+            window.location.href = "/home";
         }
-    }, [games, expired]);
+    }, [playerID]);
 
     return (
         <div className="online-status">
@@ -55,12 +39,12 @@ export default function StatusOnline(props) {
                 <div className="creation-date">Creation Date</div>
                 <div className="game-status">Status</div>
                 <div className="continue-button"></div>
-                {games.map((key) => {
+                {games.map((game) => {
                     return (
                         <GameStatus
-                            game={gameInfo(key)}
-                            key={key}
-                            gameid={key}
+                            game={game}
+                            key={game["_id"]}
+                            gameid={game["_id"]}
                         />
                     );
                 })}

@@ -6,5 +6,41 @@
     border-radius: 5px;
     padding: 20px;
     display: flex;
-    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+}
+
+.name-input {
+    background-color: var(--medium);
+    color: var(--dark-text);
+    width: 25%;
+    margin: auto;
+    border: solid 1px var(--light);
+    border-radius: 5px;
+    height: 25px;
+    outline: none;
+    text-align: center;
+}
+
+.create-button {
+    color: var(--dark-text);
+    background-color: var(--darker);
+    border: 1px solid var(--medium);
+    border-radius: 5px;
+    cursor: pointer;
+    transition-duration: 0.5s;
+    width: 50%;
+    height: 25px;
+    margin: auto;
+    margin-top: 25px;
+}
+
+.create-button:hover {
+    color: var(--light-text);
+    background-color: var(--medium);
+}
+
+.choose-name {
+    margin: auto;
+    margin-bottom: 25px;
 }

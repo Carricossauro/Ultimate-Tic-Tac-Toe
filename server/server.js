@@ -20,6 +20,7 @@ const uri =
 const client = new MongoClient(uri);
 
 await client.connect();
+console.log("Connected to mongoDB database...");
 
 const db = client.db("UltimateTicTacToe");
 
@@ -27,28 +28,19 @@ const games = db.collection("games");
 const accounts = db.collection("accounts");
 
 async function gameList(playerID) {
-    const result = games.aggregate([
-        {
-            $match: {
-                $or: [
-                    {
-                        pX: ObjectId(playerID),
-                    },
-                    {
-                        pO: ObjectId(playerID),
-                    },
-                ],
-            },
-        },
-        {
-            $project: {
+    const result = await games
+        .find(
+            { $or: [{ pX: ObjectId(playerID) }, { pO: ObjectId(playerID) }] },
+            {
                 _id: 1,
                 pX: 1,
                 status: 1,
                 winner: 1,
-            },
-        },
-    ]);
+            }
+        )
+        .sort({ "creation-date": -1 })
+        .limit(15)
+        .toArray();
 
     return result;
 }
@@ -74,9 +66,9 @@ async function createGame(playerId) {
         winner: null,
         bigBoard: bigBoardEmpty,
         smallBoard: smallBoardEmpty,
-        "creation-date": `${today.getFullYear()}-${
-            today.getMonth() + 1
-        }-${today.getDate()}`,
+        "creation-date": new Date(
+            `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
+        ),
     });
 
     return result["insertedId"].toHexString();
@@ -95,7 +87,7 @@ const io = new Server(3600, {
 });
 
 io.on("connection", (socket) => {
-    console.log(socket.id);
+    console.log(`Received connection with id ${socket.id}`);
 
     socket.on("create-account", async (name, callback) => {
         callback(await createAccount(name));
@@ -105,3 +97,6 @@ io.on("connection", (socket) => {
         callback(await gameList(playerID));
     });
 });
+
+createGame("62014cb6321c1e155f0e82a5");
+createGame("62014cb6321c1e155f0e82a5");

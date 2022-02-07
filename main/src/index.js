@@ -11,8 +11,8 @@ import Local from "./local/Local";
 import Online from "./online/Online";
 import Home from "./home/Home";
 import Footer from "./Footer";
-
 import "./index.css";
+require("dotenv").config({ path: __dirname + "/../.env" });
 
 ReactDOM.render(
     <main>
