@@ -103,13 +103,13 @@ async function createGame(playerId) {
     return result["insertedId"].toHexString();
 }
 
-async function playerName(playerID) {
-    if (!playerID) return "???";
+async function playerInfo(playerID) {
+    if (!playerID) return null;
     const result = await accounts
         .find({ _id: ObjectId(playerID) }, { name: 1 })
         .toArray();
-    if (!result) return "???";
-    return result[0]["name"];
+    if (!result) return null;
+    return result[0];
 }
 
 /*
@@ -159,7 +159,7 @@ io.on("connection", (socket) => {
         } else callback(null);
     });
 
-    socket.on("player-name", async (playerID, callback) => {
-        callback(await playerName(playerID));
+    socket.on("player-info", async (playerID, callback) => {
+        callback(await playerInfo(playerID));
     });
 });

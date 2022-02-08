@@ -1,13 +1,7 @@
 .online-container {
     display: grid;
-    grid-template-columns: 69% 1fr;
+    grid-template-columns: 63% 1fr;
     grid-gap: 5px;
-}
-
-.game-info-online {
-    background-color: var(--darker);
-    border-radius: 5px;
-    border: 1px solid var(--medium);
 }
 
 .main-game {
@@ -72,6 +66,7 @@
     border-radius: 5px;
     border: 1px solid var(--medium);
     text-align: center;
+    margin-bottom: 5px;
 }
 
 .name {
@@ -80,4 +75,33 @@
 
 .name-playing {
     font-weight: bold;
+}
+
+.game-info-online {
+    background-color: var(--darker);
+    border-radius: 5px;
+    border: 1px solid var(--medium);
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.info-table {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+
+.table-element {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.player-info-online {
+    background-color: var(--darker);
+    border-radius: 5px;
+    border: 1px solid var(--medium);
+    text-align: center;
+    padding-bottom: 10px;
 }

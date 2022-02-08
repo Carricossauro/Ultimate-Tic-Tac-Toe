@@ -4,14 +4,15 @@ import Board from "./Board";
 
 import "./Game.css";
 import Loading from "./Loading";
+import GameInfo from "./GameInfo";
 
 export default function Game({ gameID }) {
     const [game, setGame] = useState(null);
     const [connected, setConnected] = useState(false);
     const [socket, setSocket] = useState(null);
     const playerID = localStorage.getItem("id");
-    const [p1, setP1] = useState("???");
-    const [p2, setP2] = useState("???");
+    const [p1, setP1] = useState(null);
+    const [p2, setP2] = useState(null);
 
     const joinHandler = (response) => {
         if (!response) window.location.href = "/home";
@@ -23,8 +24,8 @@ export default function Game({ gameID }) {
 
     const gameInfoHandler = (response) => {
         setGame(response);
-        socket.emit("player-name", response["pX"], setP1);
-        socket.emit("player-name", response["pO"], setP2);
+        socket.emit("player-info", response["pX"], setP1);
+        socket.emit("player-info", response["pO"], setP2);
     };
 
     useEffect(() => {
@@ -58,11 +59,11 @@ export default function Game({ gameID }) {
             <div className="player-info">
                 <h3>
                     <span className={`${playing() ? "name-playing" : "name"}`}>
-                        {p1}
+                        {p1 ? p1["name"] : "???"}
                     </span>{" "}
                     <span className="name">vs</span>{" "}
                     <span className={`${!playing() ? "name-playing" : "name"}`}>
-                        {p2}
+                        {p2 ? p2["name"] : "???"}
                     </span>
                 </h3>
             </div>
@@ -80,7 +81,7 @@ export default function Game({ gameID }) {
                         );
                     })}
                 </div>
-                <div className="game-info-online">hello</div>
+                <GameInfo p1={p1} p2={p2} playing={playing} />
             </div>
         </>
     );
