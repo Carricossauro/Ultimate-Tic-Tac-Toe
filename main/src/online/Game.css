@@ -1,0 +1,83 @@
+.online-container {
+    display: grid;
+    grid-template-columns: 69% 1fr;
+    grid-gap: 5px;
+}
+
+.game-info-online {
+    background-color: var(--darker);
+    border-radius: 5px;
+    border: 1px solid var(--medium);
+}
+
+.main-game {
+    background-color: var(--darker);
+    border: 1px solid var(--medium);
+    border-radius: 5px;
+    padding: 20px;
+    display: grid;
+    grid-gap: 15px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+
+.board-online {
+    border: 2px solid transparent;
+    border-radius: 5px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    transition-duration: 0.5s;
+}
+
+.square-online {
+    border: 1px solid transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: 1;
+    transition-duration: 0.5s;
+}
+
+.l {
+    border-left: 1px solid var(--light);
+}
+
+.r {
+    border-right: 1px solid var(--light);
+}
+
+.b {
+    border-bottom: 1px solid var(--light);
+}
+
+.t {
+    border-top: 1px solid var(--light);
+}
+
+.board-playable {
+    border: 2px solid var(--medium);
+}
+
+.playable-online {
+    cursor: pointer;
+}
+
+.playable-online:hover {
+    background-color: var(--light);
+}
+
+.player-info {
+    background-color: var(--darker);
+    border-radius: 5px;
+    border: 1px solid var(--medium);
+    text-align: center;
+}
+
+.name {
+    font-weight: normal;
+}
+
+.name-playing {
+    font-weight: bold;
+}

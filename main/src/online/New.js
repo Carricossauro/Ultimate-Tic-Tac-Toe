@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import { Oval } from "react-loader-spinner";
 import { io } from "socket.io-client";
 
 import "./New.css";
+import Loading from "./Loading";
 
 export default function New() {
     const createGame = (gameId) => {
@@ -25,9 +25,5 @@ export default function New() {
         }
     }, []);
 
-    return (
-        <div className="loading-wheel">
-            <Oval />
-        </div>
-    );
+    return <Loading />;
 }

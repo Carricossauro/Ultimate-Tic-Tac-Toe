@@ -27,6 +27,35 @@ const db = client.db("UltimateTicTacToe");
 const games = db.collection("games");
 const accounts = db.collection("accounts");
 
+async function joinGame(gameID, playerID) {
+    const result = await games
+        .find({ _id: ObjectId(gameID), status: false })
+        .toArray();
+    if (!result) return false;
+    const game = result[0];
+
+    if (
+        game["pX"].toHexString() === playerID ||
+        game["pO"].toHexString() === playerID
+    ) {
+        return true;
+    } else if (game["pO"] === null) {
+        games.updateOne(
+            { _id: ObjectId(gameID) },
+            { $set: { pO: ObjectId(playerID) } }
+        );
+        return true;
+    } else return false;
+}
+
+async function gameInfo(gameID) {
+    const result = await games.find({ _id: ObjectId(gameID) }).toArray();
+    if (!result) return null;
+    const game = result[0];
+
+    return game;
+}
+
 async function gameList(playerID) {
     const result = await games
         .find(
@@ -74,6 +103,15 @@ async function createGame(playerId) {
     return result["insertedId"].toHexString();
 }
 
+async function playerName(playerID) {
+    if (!playerID) return "???";
+    const result = await accounts
+        .find({ _id: ObjectId(playerID) }, { name: 1 })
+        .toArray();
+    if (!result) return "???";
+    return result[0]["name"];
+}
+
 /*
 ###################################
 Socket.io only from here and beyond
@@ -99,5 +137,29 @@ io.on("connection", (socket) => {
 
     socket.on("create-game", async (playerID, callback) => {
         callback(await createGame(playerID));
+    });
+
+    socket.on("join", async (gameID, playerID, callback) => {
+        const response = await joinGame(gameID, playerID);
+
+        if (response) {
+            socket.join(gameID);
+            console.log(
+                `Joined connection with id ${socket.id} to room ${gameID}`
+            );
+        }
+
+        callback(response);
+    });
+
+    socket.on("game-info", async (gameID, callback) => {
+        if (socket.rooms.has(gameID)) {
+            const game = await gameInfo(gameID);
+            if (!game["status"]) callback(game);
+        } else callback(null);
+    });
+
+    socket.on("player-name", async (playerID, callback) => {
+        callback(await playerName(playerID));
     });
 });
