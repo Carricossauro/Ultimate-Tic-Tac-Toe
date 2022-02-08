@@ -9,7 +9,8 @@ export default function Square({ game, small, big, socket, playerID }) {
         return (
             game[game["playing"]] === playerID &&
             game["smallBoard"][small] === "" &&
-            game["bigBoard"][small][big] === ""
+            game["bigBoard"][small][big] === "" &&
+            !game["status"]
         );
     };
 

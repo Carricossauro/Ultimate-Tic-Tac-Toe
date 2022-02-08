@@ -51,7 +51,7 @@ export default function Game({ gameID }) {
     if (!connected || game === null) return <Loading />;
 
     const playing = () => {
-        return game[game["playing"]] === playerID;
+        return game[game["playing"]] === playerID && !game["status"];
     };
 
     return (

@@ -9,7 +9,8 @@ export default function Board({ game, small, socket, playerID }) {
     const playable = () => {
         return (
             game[game["playing"]] === playerID &&
-            game["smallBoard"][small] === ""
+            game["smallBoard"][small] === "" &&
+            !game["status"]
         );
     };
 
