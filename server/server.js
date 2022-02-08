@@ -96,5 +96,8 @@ io.on("connection", (socket) => {
     socket.on("game-list", async (playerID, callback) => {
         callback(await gameList(playerID));
     });
-});
 
+    socket.on("create-game", async (playerID, callback) => {
+        callback(await createGame(playerID));
+    });
+});

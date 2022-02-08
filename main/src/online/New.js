@@ -11,13 +11,13 @@ export default function New() {
     };
 
     useEffect(() => {
-        const socket = io("http://192.168.1.127:3600");
-
-        socket.on("connect", () => {
-            console.log("Connected with id " + socket.id);
-        });
-
         try {
+            const socket = io(process.env.REACT_APP_SERVER_IP);
+
+            socket.on("connect", () => {
+                console.log("Connected with id " + socket.id);
+            });
+
             const playerId = localStorage.getItem("id");
             socket.emit("create-game", playerId, createGame);
         } catch (error) {
