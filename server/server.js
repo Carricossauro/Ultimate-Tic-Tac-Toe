@@ -28,15 +28,13 @@ const games = db.collection("games");
 const accounts = db.collection("accounts");
 
 async function joinGame(gameID, playerID) {
-    const result = await games
-        .find({ _id: ObjectId(gameID), status: false })
-        .toArray();
+    const result = await games.find({ _id: ObjectId(gameID) }).toArray();
     if (!result) return false;
     const game = result[0];
 
     if (
-        game["pX"].toHexString() === playerID ||
-        game["pO"].toHexString() === playerID
+        (game["pX"] && game["pX"].toHexString() === playerID) ||
+        (game["pO"] && game["pO"].toHexString() === playerID)
     ) {
         return true;
     } else if (game["pO"] === null) {
@@ -63,6 +61,7 @@ async function gameList(playerID) {
             {
                 _id: 1,
                 pX: 1,
+                pO: 1,
                 status: 1,
                 winner: 1,
             }
@@ -98,6 +97,8 @@ async function createGame(playerId) {
         "creation-date": new Date(
             `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
         ),
+        playing: "pX",
+        last: -1,
     });
 
     return result["insertedId"].toHexString();
@@ -110,6 +111,109 @@ async function playerInfo(playerID) {
         .toArray();
     if (!result) return null;
     return result[0];
+}
+
+function changeStat(stat, playerID) {
+    if (stat === "wins")
+        accounts.updateOne({ _id: ObjectId(playerID) }, { $inc: { wins: 1 } });
+    else if (stat === "ties")
+        accounts.updateOne({ _id: ObjectId(playerID) }, { $inc: { ties: 1 } });
+    else if (stat === "losses")
+        accounts.updateOne(
+            { _id: ObjectId(playerID) },
+            { $inc: { losses: 1 } }
+        );
+}
+
+async function play(gameID, playerID, big, small) {
+    const game = await gameInfo(gameID);
+    const switchSymbol = { X: "O", O: "X" };
+    console.log(game[game["playing"]].toHexString() === playerID);
+    console.log(!game["status"]);
+    console.log(game["smallBoard"][small] === "");
+    console.log(game["bigBoard"][small][big] === "");
+    console.log(game["last"] === -1 || game["last"] === small);
+
+    if (
+        game[game["playing"]].toHexString() === playerID &&
+        !game["status"] &&
+        game["smallBoard"][small] === "" &&
+        game["bigBoard"][small][big] === "" &&
+        (game["last"] === -1 || game["last"] === small)
+    ) {
+        // Play will be registered - ONLY HERE
+        const symbol = game["playing"].slice(-1);
+        game["bigBoard"][small][big] = symbol;
+        game["playing"] = "p" + switchSymbol[symbol];
+        game["last"] = game["smallBoard"][big] === "" ? big : -1;
+        if (isGameOver(game["bigBoard"][small])) {
+            game["smallBoard"][small] = symbol;
+            if (isGameOver(game["smallBoard"])) {
+                game["status"] = true;
+                game["winner"] = playerID;
+                changeStat("wins", playerID);
+                changeStat("losses", game[game["playing"]].toHexString());
+            } else if (boardFull(game["bigBoard"][small])) {
+                game["smallBoard"][small] = "-";
+                game["last"] = -1;
+                changeStat("ties", playerID);
+                changeStat("ties", game[game["playing"]].toHexString());
+            }
+        } else if (boardFull(game["smallBoard"])) {
+            game["status"] = true;
+        }
+
+        const result = await games.updateOne(
+            { _id: ObjectId(gameID) },
+            {
+                $set: {
+                    ...game,
+                    _id: ObjectId(gameID),
+                    pX: ObjectId(game["pX"]),
+                    pO: ObjectId(game["pO"]),
+                },
+            }
+        );
+        console.log(result);
+    }
+
+    return true;
+}
+
+function boardFull(board) {
+    for (let i = 0; i < board.length; i++) {
+        if (board[i] === "") return false;
+    }
+
+    return true;
+}
+
+function isGameOver(board) {
+    if (
+        board[0] !== "" &&
+        board[0] !== "-" &&
+        ((board[0] === board[1] && board[1] === board[2]) ||
+            (board[0] === board[3] && board[3] === board[6]) ||
+            (board[0] === board[4] && board[4] === board[8]))
+    ) {
+        return board[0];
+    } else if (
+        board[4] !== "" &&
+        board[4] !== "-" &&
+        ((board[3] === board[4] && board[4] === board[5]) ||
+            (board[1] === board[4] && board[4] === board[7]) ||
+            (board[2] === board[4] && board[4] === board[6]))
+    ) {
+        return board[4];
+    } else if (
+        board[8] !== "" &&
+        board[8] !== "-" &&
+        ((board[6] === board[7] && board[7] === board[8]) ||
+            (board[2] === board[5] && board[5] === board[8]))
+    ) {
+        return board[8];
+    }
+    return false;
 }
 
 /*
@@ -128,14 +232,17 @@ io.on("connection", (socket) => {
     console.log(`Received connection with id ${socket.id}`);
 
     socket.on("create-account", async (name, callback) => {
+        console.log(`Creating account with name ${name} for ${socket.id}`);
         callback(await createAccount(name));
     });
 
     socket.on("game-list", async (playerID, callback) => {
+        console.log(`Sending game list to player ${playerID}`);
         callback(await gameList(playerID));
     });
 
     socket.on("create-game", async (playerID, callback) => {
+        console.log(`Creating game for player ${playerID}`);
         callback(await createGame(playerID));
     });
 
@@ -153,13 +260,24 @@ io.on("connection", (socket) => {
     });
 
     socket.on("game-info", async (gameID, callback) => {
+        console.log(`Received game info (${gameID}) request`);
         if (socket.rooms.has(gameID)) {
             const game = await gameInfo(gameID);
-            if (!game["status"]) callback(game);
+            console.log(`Sending game info (${gameID})`);
+            callback(game);
         } else callback(null);
     });
 
     socket.on("player-info", async (playerID, callback) => {
+        console.log(`Sending player info about ${playerID}`);
         callback(await playerInfo(playerID));
+    });
+
+    socket.on("play", async (gameID, playerID, small, big) => {
+        const result = await play(gameID, playerID, big, small);
+
+        const game = await gameInfo(gameID);
+        console.log(`Registered play in ${gameID} from ${playerID}`);
+        io.to(gameID).emit("played", game);
     });
 });

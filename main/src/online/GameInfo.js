@@ -1,11 +1,21 @@
-import React, { useEffect } from "react";
+import React from "react";
 
-export default function GameInfo({ p1, p2, playing }) {
+export default function GameInfo({ p1, p2, playing, game }) {
+    const winner = () => {
+        if (game["winner"] === null) return null;
+        else if (p1 && game["winner"] === p1["_id"]) return p1["name"];
+        else if (p2) return p2["name"];
+
+        return "???";
+    };
+
     return (
         <div>
             <div className="game-info-online">
                 <h3>
-                    {playing()
+                    {game["status"]
+                        ? `${winner()} wins!`
+                        : playing()
                         ? "It's your turn"
                         : "Waiting for your opponent..."}
                 </h3>
@@ -35,7 +45,7 @@ export default function GameInfo({ p1, p2, playing }) {
                 </div>
                 <h3>{p2 ? p2["name"] : "???"}</h3>
                 <div className="info-table">
-                    <siv></siv>
+                    <div></div>
                     <div className="table-element r">Wins</div>
                     <div className="table-element">
                         {p2 ? p2["wins"] : "???"}
