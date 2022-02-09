@@ -2,9 +2,10 @@ import React from "react";
 
 export default function GameInfo({ p1, p2, playing, game }) {
     const winner = () => {
-        if (game["winner"] === null) return null;
-        else if (p1 && game["winner"] === p1["_id"]) return p1["name"];
-        else if (p2) return p2["name"];
+        if (game["winner"] === null) return "It's a tie!";
+        else if (p1 && game["winner"] === p1["_id"])
+            return `${p1["name"]} wins!`;
+        else if (p2) return `${p2["name"]} wins!`;
 
         return "???";
     };
@@ -14,7 +15,7 @@ export default function GameInfo({ p1, p2, playing, game }) {
             <div className="game-info-online">
                 <h3>
                     {game["status"]
-                        ? `${winner()} wins!`
+                        ? winner()
                         : playing()
                         ? "It's your turn"
                         : "Waiting for your opponent..."}

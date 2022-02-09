@@ -1,5 +1,6 @@
 import { MongoClient, ObjectId } from "mongodb";
 import { Server } from "socket.io";
+import "dotenv/config";
 
 const smallBoardEmpty = ["", "", "", "", "", "", "", "", ""];
 const bigBoardEmpty = [
@@ -14,8 +15,7 @@ const bigBoardEmpty = [
     ["", "", "", "", "", "", "", "", ""],
 ];
 
-const uri =
-    "mongodb+srv://teste:teste@ultimatetictactoe.t8160.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const uri = process.env.MONGO_DB;
 
 const client = new MongoClient(uri);
 
@@ -128,11 +128,6 @@ function changeStat(stat, playerID) {
 async function play(gameID, playerID, big, small) {
     const game = await gameInfo(gameID);
     const switchSymbol = { X: "O", O: "X" };
-    console.log(game[game["playing"]].toHexString() === playerID);
-    console.log(!game["status"]);
-    console.log(game["smallBoard"][small] === "");
-    console.log(game["bigBoard"][small][big] === "");
-    console.log(game["last"] === -1 || game["last"] === small);
 
     if (
         game[game["playing"]].toHexString() === playerID &&
@@ -145,7 +140,8 @@ async function play(gameID, playerID, big, small) {
         const symbol = game["playing"].slice(-1);
         game["bigBoard"][small][big] = symbol;
         game["playing"] = "p" + switchSymbol[symbol];
-        game["last"] = game["smallBoard"][big] === "" ? big : -1;
+        console.log(isGameOver(game["bigBoard"][small]));
+        console.log(boardFull(game["bigBoard"][small]));
         if (isGameOver(game["bigBoard"][small])) {
             game["smallBoard"][small] = symbol;
             if (isGameOver(game["smallBoard"])) {
@@ -153,16 +149,18 @@ async function play(gameID, playerID, big, small) {
                 game["winner"] = playerID;
                 changeStat("wins", playerID);
                 changeStat("losses", game[game["playing"]].toHexString());
-            } else if (boardFull(game["bigBoard"][small])) {
-                game["smallBoard"][small] = "-";
-                game["last"] = -1;
-                changeStat("ties", playerID);
-                changeStat("ties", game[game["playing"]].toHexString());
             }
-        } else if (boardFull(game["smallBoard"])) {
+        } else if (boardFull(game["bigBoard"][small])) {
+            game["smallBoard"][small] = "-";
+            console.log("tied");
+        }
+        if (boardFull(game["smallBoard"])) {
             game["status"] = true;
+            changeStat("ties", playerID);
+            changeStat("ties", game[game["playing"]].toHexString());
         }
 
+        game["last"] = game["smallBoard"][big] === "" ? big : -1;
         const result = await games.updateOne(
             { _id: ObjectId(gameID) },
             {
