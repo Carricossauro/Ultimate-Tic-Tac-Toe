@@ -1,6 +1,8 @@
 import { MongoClient, ObjectId } from "mongodb";
 import { Server } from "socket.io";
 import "dotenv/config";
+import express from "express";
+import cors from "cors";
 
 const smallBoardEmpty = ["", "", "", "", "", "", "", "", ""];
 const bigBoardEmpty = [
@@ -220,11 +222,25 @@ Socket.io only from here and beyond
 ###################################
 */
 
-const io = new Server(3600, {
-    cors: {
-        origin: "*",
-    },
+const PORT = process.env.PORT || 3000;
+const INDEX = "/index.html";
+
+const app = express();
+app.use((req, res) => res.sendFile(INDEX, { root: __dirname }));
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "http://192.168.1.127:3000");
+    next();
 });
+
+const server = app.listen(PORT, () => console.log(`Listening on ${PORT}`));
+
+// {
+//     cors: {
+//         origin: "*",
+//     }
+// }
+
+const io = new Server(server, { cors: { origin: "*" } });
 
 io.on("connection", (socket) => {
     console.log(`Received connection with id ${socket.id}`);
