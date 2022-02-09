@@ -44,7 +44,8 @@ export default function StatusOnline(props) {
                         <GameStatus
                             game={game}
                             key={game["_id"]}
-                            gameid={game["_id"]}
+                            gameID={game["_id"]}
+                            playerID={playerID}
                         />
                     );
                 })}

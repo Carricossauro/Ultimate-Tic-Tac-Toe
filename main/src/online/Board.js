@@ -13,7 +13,7 @@ export default function Board({ game, small, playerID, play }) {
         return (
             game[game["playing"]] === playerID &&
             game["smallBoard"][small] === "" &&
-            (game["last"] == small || game["last"] == -1) &&
+            (game["last"] === small || game["last"] === -1) &&
             !game["status"]
         );
     };

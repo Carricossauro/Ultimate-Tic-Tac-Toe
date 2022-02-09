@@ -10,7 +10,7 @@ export default function Square({ game, small, big, playerID, play }) {
             game[game["playing"]] === playerID &&
             game["smallBoard"][small] === "" &&
             game["bigBoard"][small][big] === "" &&
-            (game["last"] == small || game["last"] == -1) &&
+            (game["last"] === small || game["last"] === -1) &&
             !game["status"]
         );
     };
