@@ -5,7 +5,7 @@ export default function Setup() {
     const [name, setName] = useState("");
 
     const storeAccount = (playerId) => {
-        console.log(`Contacting server ${process.en.REACT_APP_SERVER_IP}`);
+        console.log(`Contacting server ${process.env.REACT_APP_SERVER_IP}`);
         try {
             localStorage.setItem("id", playerId);
             console.log(`Stored user id ${playerId}`);
