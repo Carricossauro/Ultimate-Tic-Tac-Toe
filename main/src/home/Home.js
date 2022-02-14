@@ -13,6 +13,7 @@ export default function Home() {
                         className="link"
                         href="https://en.wikipedia.org/wiki/Ultimate_tic-tac-toe"
                         target="_blank"
+                        rel="noopener noreferrer"
                     >
                         click here.
                     </a>
@@ -23,6 +24,7 @@ export default function Home() {
                         className="link"
                         href="https://github.com/Carricossauro/Ultimate-Tic-Tac-Toe"
                         target="_blank"
+                        rel="noopener noreferrer"
                     >
                         here
                     </a>

@@ -24,21 +24,31 @@ export default function NavBar() {
                 </a>
             </nav>
             <div className="social-media">
-                <a href="https://github.com/Carricossauro" target="_blank">
+                <a
+                    href="https://github.com/Carricossauro"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
                     <FontAwesomeIcon icon={faGithub} className="icon" />
                 </a>
-                <a href="https://twitter.com/charricossauro" target="_blank">
+                <a
+                    href="https://twitter.com/charricossauro"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
                     <FontAwesomeIcon icon={faTwitter} className="icon" />
                 </a>
                 <a
                     href="https://www.linkedin.com/in/tiagocarrico/"
                     target="_blank"
+                    rel="noopener noreferrer"
                 >
                     <FontAwesomeIcon icon={faLinkedin} className="icon" />
                 </a>
                 <a
                     href="https://www.instagram.com/carricossauro/"
                     target="_blank"
+                    rel="noopener noreferrer"
                 >
                     <FontAwesomeIcon icon={faInstagram} className="icon" />
                 </a>
