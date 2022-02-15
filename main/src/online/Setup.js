@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useParams } from "react";
 import { io } from "socket.io-client";
 
-export default function Setup() {
+export default function Setup({ gameId }) {
     const [name, setName] = useState("");
 
     const storeAccount = (playerId) => {
@@ -9,6 +9,7 @@ export default function Setup() {
         try {
             localStorage.setItem("id", playerId);
             console.log(`Stored user id ${playerId}`);
+            window.location.href = `/online/${gameId}`;
         } catch (error) {
             window.location.href = "/home";
         }

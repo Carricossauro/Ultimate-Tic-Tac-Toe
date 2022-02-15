@@ -10,7 +10,7 @@ import Game from "./Game";
 export default function Online(props) {
     const { gameId } = useParams();
 
-    if (localStorage.getItem("id") == null) return <Setup />;
+    if (localStorage.getItem("id") == null) return <Setup gameId={gameId} />;
     else if (gameId === "status") return <StatusOnline />;
     else if (gameId === "new") return <New />;
     else return <Game gameID={gameId} />;
