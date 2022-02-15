@@ -9,7 +9,6 @@ export default function Setup() {
         try {
             localStorage.setItem("id", playerId);
             console.log(`Stored user id ${playerId}`);
-            window.location.href = "/online/status";
         } catch (error) {
             window.location.href = "/home";
         }
